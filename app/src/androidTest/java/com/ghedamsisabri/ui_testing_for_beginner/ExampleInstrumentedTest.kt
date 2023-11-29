@@ -25,16 +25,30 @@ class ExampleInstrumentedTest {
     @get:Rule var activityScenarioRule = activityScenarioRule<MainActivity>()
 
     @Test
-    fun checkSecondPage() {
+    fun firstTestCase() {
+        mainPage.isViewDisplayed()
         NextBtn.tap()
-        secondPageActivity.isViewDisplayed()
-
-        isTextOnScreen("SecondaryActivity")
-        Assert.assertEquals("SecondaryActivity", secondPageActivity.getText(5))
+        isTextOnScreen(EXPECTED_SECOND_PAGE_TEXT)
+        backBtn.isViewDisplayed()
     }
+
+    @Test
+    fun secondTestCase() {
+        mainPage.isViewDisplayed()
+        NextBtn.tap()
+        backBtn.tap()
+        isTextOnScreen(EXPECTED_MAIN_PAGE_TEXT)
+        NextBtn.isViewDisplayed()
+    }
+
 
     companion object{
         val NextBtn: Matcher<View> by lazy { withId(R.id.button_next_activity) }
-        val secondPageActivity: Matcher<View> by lazy { withId(R.id.activity_secondary_title) }
+        val mainPage: Matcher<View> by lazy { withId(R.id.main) }
+        val backBtn: Matcher<View> by lazy { withId(R.id.button_back) }
+
+        const val EXPECTED_SECOND_PAGE_TEXT = "SecondaryActivity"
+        const val EXPECTED_MAIN_PAGE_TEXT = "MainActivity"
     }
+
 }
